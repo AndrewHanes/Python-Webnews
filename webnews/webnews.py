@@ -11,6 +11,7 @@ class Actions(enum.Enum):
     user = "user"
     unread_counts = "unread_counts"
     newsgroups = "newsgroups"
+    search = "search"
 
 def GET(action, api_key, args={}):
     if type(action) == Actions:
@@ -33,3 +34,5 @@ def newsgroups(api_key = API_KEY):
 def newsgroups_search(newsgroup, api_key=API_KEY):
     return GET("newsgroups/" + newsgroup, api_key=api_key)
 
+def search(params = {}, api_key=API_KEY):
+    return GET(Actions.search, params, api_key)
