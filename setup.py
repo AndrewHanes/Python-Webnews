@@ -9,9 +9,9 @@ from setuptools import setup, find_packages
 version = "0.1.0"
 
 setup(
-    name="sentimentanalysis",
+    name="webnews",
     version=version,
-    description="Sentiment Analysis for CSH webnews",
+    description="CSH webnews library",
     classifiers=[],
     keywords="",
     author="ahanes",
