@@ -1,21 +1,20 @@
 import json
-import urllib
 import enum
 from urllib.parse import urlencode
 from urllib.request import urlopen
+
+API_KEY = open("private/apikey").read()
+WEBNEWS_BASE = "https://webnews.csh.rit.edu/"
+API_AGENT = "webnews-python"
 
 class Actions(enum.Enum):
     user = "user"
     unread_counts = "unread_counts"
     newsgroups = "newsgroups"
 
-
-API_KEY = open("private/apikey").read()
-WEBNEWS_BASE = "https://webnews.csh.rit.edu/"
-API_AGENT = "webnews-python"
-
-def GET(action, args={}, api_key = API_KEY):
-    action = action.value
+def GET(action, api_key, args={}):
+    if type(action) == Actions:
+        action = action.value
     args['api_key'] = api_key
     args['api_agent'] = API_AGENT
     args = urlencode(args)
@@ -23,12 +22,8 @@ def GET(action, args={}, api_key = API_KEY):
     return json.loads(req)
 
 def user(api_key = API_KEY):
-    return GET(Actions.user)
+    return GET(Actions.user, api_key=api_key)
 
 def unread_counts(api_key = API_KEY):
-    return GET(Actions.unread_counts)
+    return GET(Actions.unread_counts, api_key=api_key)
 
-resp = user()
-print(resp)
-resp = unread_counts()
-print(resp)
