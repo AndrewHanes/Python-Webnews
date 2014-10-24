@@ -27,3 +27,6 @@ def user(api_key = API_KEY):
 def unread_counts(api_key = API_KEY):
     return GET(Actions.unread_counts, api_key=api_key)
 
+def newsgroups(api_key = API_KEY):
+    return GET(Actions.newsgroups, api_key=api_key)
+
