@@ -30,3 +30,5 @@ def unread_counts(api_key = API_KEY):
 def newsgroups(api_key = API_KEY):
     return GET(Actions.newsgroups, api_key=api_key)
 
+def newsgroups_search(newsgroup, api_key=API_KEY):
+    return GET("newsgroups/" + newsgroup, api_key=api_key)
