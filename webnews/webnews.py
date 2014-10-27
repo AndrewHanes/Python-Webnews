@@ -58,3 +58,8 @@ def search(params = {}, api_key=API_KEY):
 def post_specifics(newsgroup, index, params={}, api_key=API_KEY):
     return GET(str(newsgroup)+"/"+str(index), api_key, params)
 
+def compose(newsgroup, subject, body, params={}, api_key=API_KEY):
+    params['subject'] = subject
+    params['body'] = body
+    params['newsgroup'] = newsgroup
+    return POST(Actions.compose, api_key, params)
