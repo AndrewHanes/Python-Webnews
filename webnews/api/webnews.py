@@ -63,3 +63,5 @@ def compose(newsgroup, subject, body, params={}, api_key=API_KEY):
     params['body'] = body
     params['newsgroup'] = newsgroup
     return POST(Actions.compose, api_key, params)
+
+
