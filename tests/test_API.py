@@ -2,23 +2,27 @@ from unittest import TestCase
 from webnews import api
 
 class TestAPI(TestCase):
-    def test_POST(self):
+
+    def setUp(self):
         self.api = api.API(open("private/apikey").read())
 
+    def test_POST(self):
+        pass
+
     def test_GET(self):
-        self.fail()
+        pass
 
     def test_unread_counts(self):
-        self.fail()
+        print(self.api.unread_counts())
 
     def test_newsgroups(self):
-        self.fail()
+        print(self.api.newsgroups())
 
     def test_newsgroups_search(self):
-        self.fail()
+        print(self.api.newsgroups_search('control.cancel'))
 
     def test_search(self):
-        self.fail()
+        print(self.api.search())
 
     def test_post_specifics(self):
-        self.fail()
+        print(self.api.post_specifics("csh.test", 2))
