@@ -2,6 +2,7 @@ import json
 import enum
 from urllib.parse import urlencode
 from urllib.request import urlopen
+from urllib import request
 
 API_KEY = open("private/apikey").read()
 WEBNEWS_BASE = "https://webnews.csh.rit.edu/"
@@ -19,8 +20,13 @@ def GET(action, api_key, args={}):
     args['api_key'] = api_key
     args['api_agent'] = API_AGENT
     args = urlencode(args)
-    req = urlopen(WEBNEWS_BASE + action + '?' + args).readall().decode('utf-8')
-    return json.loads(req)
+    print(WEBNEWS_BASE + action + '?' + args)
+    req = request.Request(WEBNEWS_BASE + action + '?' + args)
+    req.add_header('Accept', 'application/json')
+    resp = urlopen(req).read().decode('utf-8')
+    #req = urlopen(WEBNEWS_BASE + action + '?' + args).readall()
+    #req = req.decode('utf-8')
+    return json.loads(resp)
 
 def user(api_key = API_KEY):
     return GET(Actions.user, api_key=api_key)
@@ -34,5 +40,3 @@ def newsgroups(api_key = API_KEY):
 def newsgroups_search(newsgroup, api_key=API_KEY):
     return GET("newsgroups/" + newsgroup, api_key=api_key)
 
-def search(params = {}, api_key=API_KEY):
-    return GET(Actions.search, params, api_key)
