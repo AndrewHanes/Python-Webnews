@@ -13,6 +13,19 @@ class Actions(enum.Enum):
     unread_counts = "unread_counts"
     newsgroups = "newsgroups"
     search = "search"
+    compose = "compose"
+
+def POST(action, api_key, args={}):
+    if type(action) == Actions:
+        action = action.value
+    args['api_key'] = api_key
+    args['api_agent'] = API_AGENT
+    args = urlencode(args).encode('utf-8')
+    req = request.Request(WEBNEWS_BASE + action)
+    req.add_header('Accept', 'application/json')
+    resp = urlopen(req, args).read().decode('utf-8')
+    return json.loads(resp)
+
 
 def GET(action, api_key, args={}):
     if type(action) == Actions:
@@ -20,7 +33,6 @@ def GET(action, api_key, args={}):
     args['api_key'] = api_key
     args['api_agent'] = API_AGENT
     args = urlencode(args)
-    print(WEBNEWS_BASE + action + '?' + args)
     req = request.Request(WEBNEWS_BASE + action + '?' + args)
     req.add_header('Accept', 'application/json')
     resp = urlopen(req).read().decode('utf-8')
@@ -46,5 +58,3 @@ def search(params = {}, api_key=API_KEY):
 def post_specifics(newsgroup, index, params={}, api_key=API_KEY):
     return GET(str(newsgroup)+"/"+str(index), api_key, params)
 
-
-print(post_specifics("control.cancel", 2))
