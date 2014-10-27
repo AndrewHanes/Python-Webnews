@@ -4,64 +4,65 @@ from urllib.parse import urlencode
 from urllib.request import urlopen
 from urllib import request
 
-API_KEY = open("private/apikey").read()
-WEBNEWS_BASE = "https://webnews.csh.rit.edu/"
-API_AGENT = "webnews-python"
 
-class Actions(enum.Enum):
-    user = "user"
-    unread_counts = "unread_counts"
-    newsgroups = "newsgroups"
-    search = "search"
-    compose = "compose"
+class API:
+    def __init__(self, api_key, agent = "webnews-python", webnews_base = "https://webnews.csh.rit.edu/"):
+        self.agent = agent
+        self.api_key = api_key
+        self.webnews_base = webnews_base
 
-def POST(action, api_key, args={}):
-    if type(action) == Actions:
-        action = action.value
-    args['api_key'] = api_key
-    args['api_agent'] = API_AGENT
-    args = urlencode(args).encode('utf-8')
-    req = request.Request(WEBNEWS_BASE + action)
-    req.add_header('Accept', 'application/json')
-    resp = urlopen(req, args).read().decode('utf-8')
-    return json.loads(resp)
+    class Actions(enum.Enum):
+        user = "user"
+        unread_counts = "unread_counts"
+        newsgroups = "newsgroups"
+        search = "search"
+        compose = "compose"
 
-
-def GET(action, api_key, args={}):
-    if type(action) == Actions:
-        action = action.value
-    args['api_key'] = api_key
-    args['api_agent'] = API_AGENT
-    args = urlencode(args)
-    req = request.Request(WEBNEWS_BASE + action + '?' + args)
-    req.add_header('Accept', 'application/json')
-    resp = urlopen(req).read().decode('utf-8')
-    #req = urlopen(WEBNEWS_BASE + action + '?' + args).readall()
-    #req = req.decode('utf-8')
-    return json.loads(resp)
-
-def user(api_key = API_KEY):
-    return GET(Actions.user, api_key=api_key)
-
-def unread_counts(api_key = API_KEY):
-    return GET(Actions.unread_counts, api_key=api_key)
-
-def newsgroups(api_key = API_KEY):
-    return GET(Actions.newsgroups, api_key=api_key)
-
-def newsgroups_search(newsgroup, api_key=API_KEY):
-    return GET("newsgroups/" + newsgroup, api_key=api_key)
-
-def search(params = {}, api_key=API_KEY):
-    return GET(Actions.search, api_key, params)
-
-def post_specifics(newsgroup, index, params={}, api_key=API_KEY):
-    return GET(str(newsgroup)+"/"+str(index), api_key, params)
-
-def compose(newsgroup, subject, body, params={}, api_key=API_KEY):
-    params['subject'] = subject
-    params['body'] = body
-    params['newsgroup'] = newsgroup
-    return POST(Actions.compose, api_key, params)
+    def POST(self, action, args={}):
+        if type(action) == API.Actions:
+            action = action.value
+        args['api_key'] = self.api_key
+        args['api_agent'] = self.agent
+        args = urlencode(args).encode('utf-8')
+        req = request.Request(self.webnews_base+ action)
+        req.add_header('Accept', 'application/json')
+        resp = urlopen(req, args).read().decode('utf-8')
+        return json.loads(resp)
 
 
+    def GET(self, action, args={}):
+        if type(action) == API.Actions:
+            action = action.value
+        args['api_key'] = self.api_key
+        args['api_agent'] = self.agent
+        args = urlencode(args)
+        req = request.Request(self.webnews_base + action + '?' + args)
+        req.add_header('Accept', 'application/json')
+        resp = urlopen(req).read().decode('utf-8')
+        #req = urlopen(WEBNEWS_BASE + action + '?' + args).readall()
+        #req = req.decode('utf-8')
+        return json.loads(resp)
+
+    def user(self):
+        return self.GET(API.Actions.user)
+
+    def unread_counts(self):
+        return self.GET(API.Actions.unread_counts)
+
+    def newsgroups(self):
+        return self.GET(API.Actions.newsgroups)
+
+    def newsgroups_search(self, newsgroup):
+        return self.GET("newsgroups/" + newsgroup)
+
+    def search(self, params = {}):
+        return self.GET(API.Actions.search, params)
+
+    def post_specifics(self, newsgroup, index, params={}):
+        return self.GET(str(newsgroup)+"/"+str(index), params)
+
+    def compose(self, newsgroup, subject, body, params={}):
+        params['subject'] = subject
+        params['body'] = body
+        params['newsgroup'] = newsgroup
+        return self.POST(API.Actions.compose, params)
