@@ -42,3 +42,9 @@ def newsgroups_search(newsgroup, api_key=API_KEY):
 
 def search(params = {}, api_key=API_KEY):
     return GET(Actions.search, api_key, params)
+
+def post_specifics(newsgroup, index, params={}, api_key=API_KEY):
+    return GET(str(newsgroup)+"/"+str(index), api_key, params)
+
+
+print(post_specifics("control.cancel", 2))
