@@ -19,7 +19,6 @@ setup(
     url="None",
     license="None",
     packages=find_packages(
-        'nltk'
     ),
     scripts=[
         "distribute_setup.py",
