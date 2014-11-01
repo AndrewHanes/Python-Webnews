@@ -5,8 +5,10 @@ import os
 class TestAPI(TestCase):
 
     def testSingleton(self):
-        a = api.API(open("private/apikey").read())
-        b = api.API(open("private/apikey").read())
+        key = os.environ.get('WEBNEWS_API') if os.environ.get('WEBNEWS_API') != None else\
+            open("private/apikey").read()
+        a = api.API(key)
+        b = api.API(key)
         self.assertTrue(a is b)
 
     def setUp(self):
