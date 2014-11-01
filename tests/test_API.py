@@ -1,28 +1,39 @@
 from unittest import TestCase
 from webnews import api
+import os
 
 class TestAPI(TestCase):
 
+    def testSingleton(self):
+        a = api.API(open("private/apikey").read())
+        b = api.API(open("private/apikey").read())
+        self.assertTrue(a is b)
+
     def setUp(self):
-        self.api = api.API(open("private/apikey").read())
+        if os.environ['WEBNEWS_API'] == None:
+            self.api = api.API(open("private/apikey").read())
+        else:
+            self.api = api.API(os.environ['WEBNEWS_API'])
 
     def test_POST(self):
+        #Tests handled by other methods
         pass
 
     def test_GET(self):
+        #Tests handled by other methods
         pass
 
     def test_unread_counts(self):
-        print(self.api.unread_counts())
+        self.api.unread_counts()
 
     def test_newsgroups(self):
-        print(self.api.newsgroups())
+        self.api.newsgroups())
 
     def test_newsgroups_search(self):
-        print(self.api.newsgroups_search('control.cancel'))
+        self.api.newsgroups_search('control.cancel')
 
     def test_search(self):
-        print(self.api.search())
+        self.api.search()
 
     def test_post_specifics(self):
-        print(self.api.post_specifics("csh.test", 2))
+        self.api.post_specifics("control.cancel", 3)
