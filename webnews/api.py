@@ -10,7 +10,6 @@ class APINonSingle:
         self.agent = agent
         self.api_key = api_key
         self.webnews_base = webnews_base
-        print("Key: " + api_key)
 
     class Actions(enum.Enum):
         user = "user"
@@ -40,7 +39,6 @@ class APINonSingle:
         req = request.Request(self.webnews_base + action + '?' + args)
         req.add_header('Accept', 'application/json')
         resp = urlopen(req).read().decode('utf-8')
-        print(self.webnews_base + action + '?' + args)
         return json.loads(resp)
 
     def user(self):
@@ -67,13 +65,15 @@ class APINonSingle:
         params['newsgroup'] = newsgroup
         return self.POST(API.Actions.compose, params)
 
+"""
+Wrap the APINonSingle object so that
+only a single object for each key will exist.
+
+Optimization for object implementation
+"""
 class API(APINonSingle):
     _instance = {}
-
     def __new__(cls, *args, **kwargs):
         if not args[0] in cls._instance:
             cls._instance[args[0]] = APINonSingle(*args, **kwargs)
         return cls._instance[args[0]]
-
-a = API(open("private/apikey").read())
-print(a.newsgroups())
