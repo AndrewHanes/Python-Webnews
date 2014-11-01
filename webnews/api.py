@@ -4,12 +4,13 @@ from urllib.parse import urlencode
 from urllib.request import urlopen
 from urllib import request
 
+class APINonSingle:
 
-class API:
     def __init__(self, api_key, agent = "webnews-python", webnews_base = "https://webnews.csh.rit.edu/"):
         self.agent = agent
         self.api_key = api_key
         self.webnews_base = webnews_base
+        print("Key: " + api_key)
 
     class Actions(enum.Enum):
         user = "user"
@@ -39,8 +40,7 @@ class API:
         req = request.Request(self.webnews_base + action + '?' + args)
         req.add_header('Accept', 'application/json')
         resp = urlopen(req).read().decode('utf-8')
-        #req = urlopen(WEBNEWS_BASE + action + '?' + args).readall()
-        #req = req.decode('utf-8')
+        print(self.webnews_base + action + '?' + args)
         return json.loads(resp)
 
     def user(self):
@@ -66,3 +66,14 @@ class API:
         params['body'] = body
         params['newsgroup'] = newsgroup
         return self.POST(API.Actions.compose, params)
+
+class API(APINonSingle):
+    _instance = {}
+
+    def __new__(cls, *args, **kwargs):
+        if not args[0] in cls._instance:
+            cls._instance[args[0]] = APINonSingle(*args, **kwargs)
+        return cls._instance[args[0]]
+
+a = API(open("private/apikey").read())
+print(a.newsgroups())
