@@ -1,9 +1,11 @@
 language: python
 python:
-  - "3.2"
-  - "3.3"
-  - "3.4"
-  - "pypy"
+- '3.2'
+- '3.3'
+- '3.4'
 install:
-  - pip install -r requirements.txt
+- pip install -r requirements.txt
 script: python -m unittest discover
+env:
+  global:
+    secure: Yc3ijyHicTRVYtRuA57PevDlYsl50zW/paFjIJMq2ZLCZaZv7oa2rN917lCK2DjMR9DSlGE+xGVO6ywHsPRoVPWIm7k3EmHKV1I5J9hb7ZSYDFGvVEiqT7bG3cvuhm6ufFQCkbhTjW2d8f3MECsrhanemguBES9dFuIa/6HAjso=
