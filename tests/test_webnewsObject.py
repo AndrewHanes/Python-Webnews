@@ -1,4 +1,5 @@
 from unittest import TestCase
+import os
 from webnews import webnews
 from webnews import api
 
@@ -9,3 +10,29 @@ class TestWebnewsObject(TestCase):
         apiobj = t._api
         a = webnews.WebnewsObject(apiobj)
         self.assertTrue(type(a._api) == api.APINonSingle)
+
+    def test_populate(self):
+        b = webnews.WebnewsObject('asdf')
+        d = {'a': 5, 'b': 'a'}
+        b.populate(d)
+        self.assertTrue(hasattr(b, 'a'))
+        self.assertTrue(hasattr(b, 'b'))
+        self.assertTrue(b.a == 5)
+        self.assertTrue(b.b == 'a')
+
+    def setUp(self):
+        if os.environ.get('WEBNEWS_API') == None:
+            self.api = api.API(open("private/apikey").read())
+        else:
+            self.api = api.API(os.environ['WEBNEWS_API'])
+
+class TestNewsgroupObject(TestCase):
+    def test___init__(self):
+        w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
+        self.assertTrue(type(w._api) == api.APINonSingle)
+
+    def setUp(self):
+        if os.environ.get('WEBNEWS_API') == None:
+            self.api = api.API(open("private/apikey").read())
+        else:
+            self.api = api.API(os.environ['WEBNEWS_API'])
