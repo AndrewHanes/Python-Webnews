@@ -2,3 +2,4 @@ tests/private
 .idea
 tests/__pycache__/
 webnews/__pycache__/
+webnews/private
