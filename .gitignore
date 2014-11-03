@@ -3,3 +3,4 @@ tests/private
 tests/__pycache__/
 webnews/__pycache__/
 webnews/private
+private
