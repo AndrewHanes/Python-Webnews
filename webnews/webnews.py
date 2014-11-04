@@ -1,5 +1,4 @@
 from webnews import api
-import json
 
 class WebnewsObject(object):
     """
