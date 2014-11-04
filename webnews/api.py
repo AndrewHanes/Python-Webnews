@@ -53,6 +53,9 @@ class APINonSingle:
     def newsgroups_search(self, newsgroup):
         return self.GET("newsgroups/" + newsgroup)
 
+    def newsgroup_posts(self, newsgroup, params={}):
+        return self.GET(newsgroup + '/index', params)
+
     def search(self, params = {}):
         return self.GET(API.Actions.search, params)
 
