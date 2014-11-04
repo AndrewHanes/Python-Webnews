@@ -2,13 +2,28 @@ from webnews import api
 import json
 
 class WebnewsObject(object):
+    """
+    This object is the parent object for all webnews objects
+    """
     def __init__(self, api_val):
-        if type(api) == api.API:
+        """
+        init
+        :param api_val: The api key or api object to use
+        :return:
+        """
+        if type(api) == api.APINonSingle:
             self._api = api_val
         else:
             self._api = api.API(api_val)
 
     def populate(self, ng):
+        """
+        Populate the object with values from a dictionary
+
+        Useful for building objects from JSON
+        :param ng: object to populate
+        :return: None
+        """
         for k in ng:
             setattr(self, k, ng[k])
 
@@ -25,6 +40,11 @@ class Newsgroup(WebnewsObject):
 
 
     def list(self, limit = 20):
+        """
+        List posts
+        :param limit: Max number of posts to list
+        :return: Each post;  This is a generator
+        """
         more_older = True
         while more_older and limit > 0:
             data = self._api.newsgroup_posts(self.name)
