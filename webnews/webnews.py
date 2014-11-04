@@ -21,4 +21,16 @@ class Newsgroup(WebnewsObject):
         super(Newsgroup, self).__init__(api_val)
         ng = self._api.newsgroups_search(name)
         self.populate(ng['newsgroup'])
-        print([i for i in ng['newsgroup'].keys()])
+        #print([i for i in ng['newsgroup'].keys()])
+
+
+    def list(self, limit = 20):
+        more_older = True
+        while more_older and limit > 0:
+            data = self._api.newsgroup_posts(self.name)
+            more_older = data['more_older']
+            if not 'posts_older' in data:
+                raise KeyError("Missing key in api response")
+            for p in data['posts_older']:
+                yield p
+                limit -= 1
