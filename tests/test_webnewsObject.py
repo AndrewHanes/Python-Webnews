@@ -36,6 +36,13 @@ class TestNewsgroupObject(TestCase):
         for i in w.list():
             pass
 
+
+    def test_list_paginate_nodup(self):
+        w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
+        a,b,c,d = w.list(limit=4,callLimit=2)
+        self.assertTrue(a['post']['date'] != c['post']['date'])
+        self.assertTrue(b['post']['date'] != d['post']['date'])
+
     def test_list_limit(self):
         w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
         count = 0
