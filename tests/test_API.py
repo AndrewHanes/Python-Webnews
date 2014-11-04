@@ -42,5 +42,7 @@ class TestAPI(TestCase):
 
     def test_newsgroup_posts_noparam(self):
         self.api.newsgroup_posts('control.cancel', {})
+
+    def test_newsgroup_posts_param(self):
         t = (self.api.newsgroup_posts('control.cancel', {'limit': 2}))
         self.assertTrue(len(t['posts_older']) == 2)
