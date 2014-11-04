@@ -46,18 +46,18 @@ class Newsgroup(WebnewsObject):
         :return: Each post;  This is a generator
         """
         more_older = True
-        oldest = []
+        oldest = [None]
         while more_older and limit > 0:
             params = {}
-            if len(oldest) > 0:
-                params['from_older'] = oldest[-1]
+            if oldest[0] != None:
+                params['from_older'] = oldest[0]
             params['limit'] = callLimit
             data = self._api.newsgroup_posts(self.name, params=params)
             more_older = data['more_older']
             if not 'posts_older' in data:
                 raise KeyError("Missing key in api response")
             for p in data['posts_older']:
-                oldest.append(p['post']['date'])
+                oldest[0] = p['post']['date']
                 yield p
                 limit -= 1
                 if limit == 0:
