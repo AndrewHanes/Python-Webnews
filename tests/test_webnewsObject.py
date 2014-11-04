@@ -34,7 +34,15 @@ class TestNewsgroupObject(TestCase):
     def test_list(self):
         w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
         for i in w.list():
-            print(i)
+            pass
+
+    def test_list_limit(self):
+        w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
+        count = 0
+        LIM = 2
+        for i in w.list(limit=LIM):
+            count += 1
+        self.assertTrue(LIM == count)
 
     def setUp(self):
         if os.environ.get('WEBNEWS_API') == None:
