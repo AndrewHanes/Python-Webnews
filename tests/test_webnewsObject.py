@@ -31,6 +31,11 @@ class TestNewsgroupObject(TestCase):
         w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
         self.assertTrue(type(w._api) == api.APINonSingle)
 
+    def test_list(self):
+        w = webnews.Newsgroup(self.api.api_key, 'control.cancel')
+        for i in w.list():
+            print(i)
+
     def setUp(self):
         if os.environ.get('WEBNEWS_API') == None:
             self.api = api.API(open("private/apikey").read())
