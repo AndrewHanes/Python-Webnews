@@ -53,3 +53,6 @@ class Newsgroup(WebnewsObject):
             for p in data['posts_older']:
                 yield p
                 limit -= 1
+                if limit == 0:
+                    break
+
