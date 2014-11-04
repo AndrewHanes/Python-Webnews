@@ -38,21 +38,27 @@ class Newsgroup(WebnewsObject):
         #print([i for i in ng['newsgroup'].keys()])
 
 
-    def list(self, limit = 20):
+    def list(self, limit = 20, callLimit=20):
         """
         List posts
         :param limit: Max number of posts to list
+        :param callLimit: Number of posts to fetch on a single call
         :return: Each post;  This is a generator
         """
         more_older = True
+        oldest = []
         while more_older and limit > 0:
-            data = self._api.newsgroup_posts(self.name)
+            params = {}
+            if len(oldest) > 0:
+                params['from_older'] = oldest[-1]
+            params['limit'] = callLimit
+            data = self._api.newsgroup_posts(self.name, params=params)
             more_older = data['more_older']
             if not 'posts_older' in data:
                 raise KeyError("Missing key in api response")
             for p in data['posts_older']:
+                oldest.append(p['post']['date'])
                 yield p
                 limit -= 1
                 if limit == 0:
                     break
-
