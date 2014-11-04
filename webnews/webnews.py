@@ -11,7 +11,7 @@ class WebnewsObject(object):
         :param api_val: The api key or api object to use
         :return:
         """
-        if type(api) == api.APINonSingle:
+        if type(api) == api.APINonSingle or type(api) == api.API:
             self._api = api_val
         else:
             self._api = api.API(api_val)
