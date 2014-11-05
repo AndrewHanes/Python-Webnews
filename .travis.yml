@@ -15,5 +15,4 @@ deploy:
   password:
     secure: HePQO5bjtv95CWJOx99r/tNxc1SlWAPrcTfaocjX58QaivPo9Ii7Nd0DStk78zS4x1v+J90X/4gfPieQMw5SPZUuEh02I6cLMcTq75a0USy4RLdg/FEH61Gmr99x+d1uwKNhUmRQFyCYNVQiH/LeEmJFUeLrZuTfRhmwSp48M0k=
   on:
-    repo: AndrewHanes/Python-Webnews
     branch: pypi
