@@ -9,3 +9,11 @@ script: python -m unittest discover
 env:
   global:
     secure: Yc3ijyHicTRVYtRuA57PevDlYsl50zW/paFjIJMq2ZLCZaZv7oa2rN917lCK2DjMR9DSlGE+xGVO6ywHsPRoVPWIm7k3EmHKV1I5J9hb7ZSYDFGvVEiqT7bG3cvuhm6ufFQCkbhTjW2d8f3MECsrhanemguBES9dFuIa/6HAjso=
+deploy:
+  provider: pypi
+  user: ahanes
+  password:
+    secure: HePQO5bjtv95CWJOx99r/tNxc1SlWAPrcTfaocjX58QaivPo9Ii7Nd0DStk78zS4x1v+J90X/4gfPieQMw5SPZUuEh02I6cLMcTq75a0USy4RLdg/FEH61Gmr99x+d1uwKNhUmRQFyCYNVQiH/LeEmJFUeLrZuTfRhmwSp48M0k=
+  on:
+    repo: AndrewHanes/Python-Webnews
+    branch: production

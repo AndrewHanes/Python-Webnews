@@ -9,17 +9,16 @@ from setuptools import setup, find_packages
 version = "0.1.0"
 
 setup(
-    name="webnews",
+    name="python-webnews",
     version=version,
     description="CSH webnews library",
     classifiers=[],
-    keywords="",
+    keywords="csh webnews",
     author="ahanes",
     author_email="ahanes@csh.rit.edu",
-    url="None",
+    url="https://github.com/AndrewHanes/Python-Webnews",
     license="None",
-    packages=find_packages(
-    ),
+    packages=find_packages(),
     scripts=[
         "distribute_setup.py",
     ],
